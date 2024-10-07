@@ -1,1 +1,6 @@
 promptflow
+promptflow-tools
+python-dotenv
+keyrings.alt
+beautifulsoup4
+requests
