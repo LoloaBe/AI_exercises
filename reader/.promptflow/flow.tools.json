@@ -46,13 +46,63 @@
     "article_simplified.jinja2": {
       "type": "llm",
       "inputs": {
-        "main_text": {
+        "article": {
           "type": [
             "string"
           ]
         }
       },
       "source": "article_simplified.jinja2"
+    },
+    "cache_article.py": {
+      "type": "python",
+      "inputs": {
+        "article_text": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "description": "Caches the given article text into a temporary Python file.\n\nArgs:\n    article_text (str): The text of the article to be cached.\n\nReturns:\n    str: The same article text that was provided as input.\n\nExample:\n    >>> cache_article(\"This is a sample article text.\")\n    \"This is a sample article text.\"",
+      "source": "cache_article.py",
+      "function": "cache_article"
+    },
+    "retrieve_article.py": {
+      "type": "python",
+      "inputs": {
+        "classifier": {
+          "type": [
+            "string"
+          ]
+        },
+        "article_text": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "description": "Retrieves the cached article text or processes a new article text based on the input parameters.\n\nArgs:\n    classifier (str): A classifier string to categorize the article.\n    article_text (str, optional): The text of the new article to be processed. Defaults to None.\n\nReturns:\n    dict: A dictionary containing the classifier, chat status, and article text.\n        - \"classifier\" (str): The classifier string provided as input.\n        - \"chat_status\" (bool): Indicates whether the chat is active.\n        - \"text\" (str or None): The article text, either new or cached.\n\nExample:\n    >>> retrieve_cached_article(\"news\", \"This is a new article.\")\n    {'classifier': 'news', 'chat_status': False, 'text': 'This is a new article.'}\n    >>> retrieve_cached_article(\"news\")\n    {'classifier': 'news', 'chat_status': True, 'text': 'Cached article text'}\n    >>> retrieve_cached_article(\"news\")\n    {'classifier': 'news', 'chat_status': False, 'text': None}",
+      "source": "retrieve_article.py",
+      "function": "retrieve_cached_article"
+    },
+    "output_response.py": {
+      "type": "python",
+      "inputs": {
+        "cached_article": {
+          "type": [
+            "object"
+          ],
+          "default": "{'chat_status': False, 'text': None}"
+        },
+        "chat": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "description": "Determines the appropriate response based on the cached article status and chat input.\n\nArgs:\n    cached_article (dict): A dictionary containing the status and text of the cached article.\n        - \"chat_status\" (bool): Indicates whether the chat is active.\n        - \"text\" (str or None): The cached article text.\n    chat (str, optional): The chat input provided by the user.\n\nReturns:\n    str: The appropriate response based on the input conditions.\n\nExample:\n    >>> output_response({\"chat_status\": False, \"text\": \"Cached article text\"}, None)\n    'Cached article text'\n    >>> output_response({\"chat_status\": False, \"text\": None}, None)\n    'Please paste in the link to the article you want to talk about!'\n    >>> output_response({\"chat_status\": True, \"text\": \"Cached article text\"}, \"User chat message\")\n    'User chat message'\n    >>> output_response({\"chat_status\": True, \"text\": \"Cached article text\"}, None)\n    'Invalid input.'",
+      "source": "output_response.py",
+      "function": "output_response"
     }
   }
 }

@@ -14,7 +14,7 @@ inputs:
 outputs:
   answer:
     type: string
-    reference: ${chat.output}
+    reference: ${output_response.output}
     is_chat_output: true
 nodes:
 - name: chat
@@ -54,6 +54,28 @@ nodes:
     model: gpt-3.5-turbo
     temperature: 0.7
     max_tokens: 400
-    main_text: ${article_scraper.output}
+    article: ${article_scraper.output}
   connection: flow_reader_connect_openai
   api: chat
+- name: cache_article
+  type: python
+  source:
+    type: code
+    path: cache_article.py
+  inputs:
+    article_text: ${article_simplified.output}
+- name: retrieve_cached_article
+  type: python
+  source:
+    type: code
+    path: retrieve_article.py
+  inputs:
+    article_text: ${cache_article.output}
+- name: output_response
+  type: python
+  source:
+    type: code
+    path: output_response.py
+  inputs:
+    chat: ${chat.output}
+    cached_article: ${retrieve_cached_article.output}
