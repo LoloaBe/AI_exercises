@@ -9,7 +9,8 @@ inputs:
   question:
     type: string
     is_chat_input: true
-    default: Just say hello
+    default: "Check out this link: https://en.wikipedia.org/wiki/Metaponto and let
+      me know what you think"
 outputs:
   answer:
     type: string
@@ -28,5 +29,31 @@ nodes:
     chat_history: ${inputs.chat_history}
     question: ${inputs.question}
     model: gpt-3.5-turbo
+  connection: flow_reader_connect_openai
+  api: chat
+- name: extract_url
+  type: python
+  source:
+    type: code
+    path: extract_url.py
+  inputs:
+    text: ${inputs.question}
+- name: article_scraper
+  type: python
+  source:
+    type: code
+    path: article_scraper.py
+  inputs:
+    url: ${extract_url.output}
+- name: article_simplified
+  type: llm
+  source:
+    type: code
+    path: article_simplified.jinja2
+  inputs:
+    model: gpt-3.5-turbo
+    temperature: 0.7
+    max_tokens: 400
+    main_text: ${article_scraper.output}
   connection: flow_reader_connect_openai
   api: chat

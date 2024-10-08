@@ -16,6 +16,43 @@
         }
       },
       "source": "chat.jinja2"
+    },
+    "extract_url.py": {
+      "type": "python",
+      "inputs": {
+        "text": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "description": "Extracts the first URL found in the given text.\n\nArgs:\n    text (str): The input text from which to extract the URL.\n\nReturns:\n    str: The first URL found in the text. If no URL is found, returns None.\n\nExample:\n    >>> extract_url(\"Check out this link: https://example.com and let me know what you think.\")\n    'https://example.com'",
+      "source": "extract_url.py",
+      "function": "extract_url"
+    },
+    "article_scraper.py": {
+      "type": "python",
+      "inputs": {
+        "url": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "description": "Scrapes the given URL to extract the title, publishing date, and main text of the article.\n\nArgs:\n    url (str): The URL of the article to be scraped.\n\nReturns:\n    str: A JSON-formatted string containing the article's title, publishing date, and main text.\n    If the page fails to load, an error message is returned instead.\n\nExample:\n    >>> article_scraper('https://example.com/article')\n    {\n        \"title\": \"Example Article Title\",\n        \"publishing_date\": \"2024-08-14\",\n        \"main_text\": \"This is the main content of the article...\"\n    }",
+      "source": "article_scraper.py",
+      "function": "article_scraper"
+    },
+    "article_simplified.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "main_text": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "article_simplified.jinja2"
     }
   }
 }
