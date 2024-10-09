@@ -56,15 +56,16 @@ def article_scraper(url: str) -> str:
 
     # Extract the main text of the article by joining all paragraph tags
     paragraphs = soup.find_all('p')
-    #main_text = ' '.join([p.get_text() for p in paragraphs])
-    main_text = 'The town was built by the ancient Greeks to defend Sybaris from the growth of Taranto. A 1 km stretch of beach with white powdery sand is a further tourist attraction. The city of Metaponto was built by Greek settlers of Achaia in the second half of the 7th century to defend themselves from the continuous expansion of Taranto.'
+    main_text = ' '.join([p.get_text() for p in paragraphs])
+    #main_text = 'The town was built by the ancient Greeks to defend Sybaris from the growth of Taranto. A 1 km stretch of beach with white powdery sand is a further tourist attraction. The city of Metaponto was built by Greek settlers of Achaia in the second half of the 7th century to defend themselves from the continuous expansion of Taranto.'
 
     # Compile the extracted information into a dictionary
-    article_data = {
-        "title": title,
-        "publishing_date": date,
-        "main_text": main_text
-    }
+    #article_data = {
+        #"title": title,
+        #"publishing_date": date,
+        #"main_text": main_text
+    #}
 
     # Return the article data as a JSON-formatted string
-    return json.dumps(article_data, indent=4)
+    #return json.dumps(article_data, indent=4)
+    return json.dumps(main_text, indent=4)
