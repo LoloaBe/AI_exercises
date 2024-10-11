@@ -46,7 +46,7 @@
     "article_simplified.jinja2": {
       "type": "llm",
       "inputs": {
-        "article": {
+        "main_text": {
           "type": [
             "string"
           ]

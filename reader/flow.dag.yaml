@@ -54,7 +54,7 @@ nodes:
     model: gpt-3.5-turbo
     temperature: 0.7
     max_tokens: 400
-    article: ${article_scraper.output}
+    main_text: ${article_scraper.output}
   connection: flow_reader_connect_openai
   api: chat
 - name: cache_article
@@ -79,3 +79,10 @@ nodes:
   inputs:
     chat: ${chat.output}
     cached_article: ${retrieve_cached_article.output}
+- name: article_scraper_test
+  type: python
+  source:
+    type: code
+    path: article_scraper.py
+  inputs:
+    url: ${extract_url.output}
